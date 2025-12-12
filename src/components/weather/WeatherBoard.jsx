@@ -1,12 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import AddToFavourite from "./AddToFavourite";
 import WeatherHeadline from "./WeatherHeadline";
 import WeatherCondition from "./WeatherCondition";
-import useWeather from "../../hooks/useWeather";
 import { WeatherContext } from "../../Context";
 
 export default function WeatherBoard() {
-  const { loading } = useWeather(WeatherContext);
+  const { loading } = useContext(WeatherContext);
   return (
     <div className="container">
       <div
