@@ -17,7 +17,7 @@ export default function Page() {
   return (
     <>
       {loading.state ? (
-        <div>
+        <div className="flex  rounded-md p-8 mt-14 mx-auto h-screen items-center justify-center">
           <p>{loading.message}</p>
         </div>
       ) : (
