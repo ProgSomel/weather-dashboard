@@ -1,11 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
 import AddToFavourite from "./AddToFavourite";
 import WeatherHeadline from "./WeatherHeadline";
 import WeatherCondition from "./WeatherCondition";
 import { WeatherContext } from "../../Context";
 
 export default function WeatherBoard() {
-  const { loading } = useContext(WeatherContext);
   return (
     <div className="container">
       <div
@@ -15,15 +14,11 @@ export default function WeatherBoard() {
         max-w-[1058px] mx-auto"
       >
         <div className="grid md:grid-cols-2 gap-10 md:gap-6">
-          {loading.state ? (
-            <p>{loading.message}</p>
-          ) : (
-            <>
-              <AddToFavourite />
-              <WeatherHeadline />
-              <WeatherCondition />
-            </>
-          )}
+          <>
+            <AddToFavourite />
+            <WeatherHeadline />
+            <WeatherCondition />
+          </>
         </div>
       </div>
     </div>
