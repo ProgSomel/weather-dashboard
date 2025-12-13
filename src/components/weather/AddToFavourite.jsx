@@ -8,18 +8,18 @@ export default function AddToFavourite() {
     useContext(FavouriteContext);
   const { weatherData } = useContext(WeatherContext);
 
-  const [isFavourite, toggleFavourite] = useState(false);
+  const [isFavourite, setIsFavourite] = useState(false);
 
   const { latitude, longitude, location } = weatherData;
 
   const checkIsFavourite = useEffectEvent(() => {
     const found = favourites?.find((fav) => fav.location === location);
-    toggleFavourite(found);
+    setIsFavourite(found);
   });
 
   useEffect(() => {
     checkIsFavourite();
-  }, [favourites]);
+  }, [favourites, location]);
 
   function handleFavourites() {
     const found = favourites?.find((fav) => fav.location === location);

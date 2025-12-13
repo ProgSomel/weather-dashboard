@@ -1,4 +1,5 @@
-import { useEffect, useEffectEvent, useState } from "react";
+import { useContext, useEffect, useEffectEvent, useState } from "react";
+import { LocationContext } from "../Context";
 
 const useWeather = () => {
   const [weatherData, setWeatherData] = useState({
@@ -21,6 +22,9 @@ const useWeather = () => {
   });
 
   const [error, setError] = useState(null);
+
+  const { selectedLocation } = useContext(LocationContext);
+  
 
   const fetchWeatherData = async (latitude, longitude) => {
     try {
@@ -73,25 +77,37 @@ const useWeather = () => {
       state: true,
       message: "Finding Location",
     });
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        if (!isCancelled) {
-          // ✅ Only fetch if not unmounted
-          fetchData(position.coords.latitude, position.coords.longitude);
-        }
-      },
-      (error) => {
-        if (!isCancelled) {
-          setError(error);
-          setLoading({ state: false, message: "" });
-        }
+
+    if (
+      selectedLocation?.latitude &&
+      selectedLocation?.longitude &&
+      selectedLocation?.latitude !== 0 &&
+      selectedLocation?.longitude !== 0
+    ) {
+      if (!isCancelled) {
+        fetchData(selectedLocation?.latitude, selectedLocation?.longitude);
       }
-    );
+    } else {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          if (!isCancelled) {
+            // ✅ Only fetch if not unmounted
+            fetchData(position.coords.latitude, position.coords.longitude);
+          }
+        },
+        (error) => {
+          if (!isCancelled) {
+            setError(error);
+            setLoading({ state: false, message: "" });
+          }
+        }
+      );
+    }
 
     return () => {
       isCancelled = true;
     };
-  }, []);
+  }, [selectedLocation]);
 
   return {
     weatherData,

@@ -1,14 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import TempMaxIcon from "../../assets/icons/temp-max.svg";
 import TempMinIcon from "../../assets/icons/temp-min.svg";
 import HumidityIcon from "../../assets/icons/humidity.svg";
 import CloudIcon from "../../assets/icons/cloud.svg";
 import WindIcon from "../../assets/icons/wind.svg";
-import useWeather from "../../hooks/useWeather";
 import { WeatherContext } from "../../Context";
 
 export default function WeatherCondition() {
-  const { weatherData } = useWeather(WeatherContext);
+  const { weatherData } = useContext(WeatherContext);
   const {
     climate,
     maxTemperature,
